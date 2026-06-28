@@ -7,7 +7,7 @@ Hours, also known as *no-name-yet-but-its-good-also-nokwts-fingering-repeat-with
                e
 ```
 
-This is my rendition of it for Kanata. The layers and mods are how I prefer them, and the B letter (which is positioned on the qwerty B position which I hate) has been banished to a combo on the top row, which I find much more comfortable.
+This is my rendition of it for Kanata. The layers and mods are how I prefer them, and the B letter (which was positioned on qwerty B position which I hate) has been moved to a combo on the top row, which I find much more comfortable.
 
 It utilizes: \
 • nonstandard fingermap (nokwts, color coded below) \
