@@ -330,8 +330,8 @@ rkeys (
   				(tap-hold-release-keys $tap-timeout $hold-timeout $char $mod $keys)
   				;;while typing (flow mode = 3 keys pressed in the last 450ms), any key within $keys pressed within timeout will immediately trigger tap action
   				
-  				(tap-hold-release $tap-timeout $hold-timeout $char $mod)
-  				;;while not in flow mode, any key pressed and released before timeout will trigger hold action
+  				(tap-hold-release-tap-keys-release $tap-timeout $hold-timeout $char $mod () $keys)
+  				;;while not in flow mode, any key within $keys pressed AND released within timeout will trigger tap action; lets you stack modifiers
   			   )
    )
 )
@@ -342,14 +342,22 @@ rkeys (
 (t! mod m	‹⎇	$lkeys)
 (t! mod s	‹❖	$lkeys)
 (t! mod d  ralt	$lkeys)
-(t! mod ␣	(layer-while-held nav) $lkeys)
+(defalias ␣ (t! flowtap 
+  			(tap-hold-release-keys $tap-timeout $hold-timeout ␣ (layer-while-held nav) $lkeys)			
+  			(tap-hold-release $tap-timeout $hold-timeout ␣ (layer-while-held nav) )
+  		   )
+)
 
 ;;right side
 (t! mod h	⎈›	$rkeys)
 (t! mod a	‹⎇	$rkeys)
 (t! mod i	❖›	$rkeys)
 (t! mod r 	ralt   $rkeys)
-(t! mod e	(layer-while-held sym) $rkeys)
+(defalias e (t! flowtap 
+  			(tap-hold-release-keys $tap-timeout $hold-timeout e (layer-while-held sym) $rkeys)			
+  			(tap-hold-release $tap-timeout $hold-timeout e (layer-while-held sym) )
+  		   )
+)
 
 ;;sym layer
 ;;left side
