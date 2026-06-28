@@ -8,7 +8,7 @@ windows-altgr cancel-lctl-press
 )
 
 (defsrc 
-     q   w   e   r   t   y   u   i   o   p   [   ] 
+  ⭾  q   w   e   r   t   y   u   i   o   p   [   ] 
   ⇪  a   s   d   f   g   h   j   k   l   ;   '   \  ↩
   ‹⇧ z   x   c   v   b   n   m   ,   .   /   ⇧›
                       ␣          ralt 
@@ -18,9 +18,9 @@ windows-altgr cancel-lctl-press
 ;;Layers
 
 #| Top layer
-    k ★ f y w    q j u o . ⌫
+⭾  k ★ f y w    q j u o . ⌫
 OS⇧ t m s d g    x r i a h  OS⇧
-⭾   z v p c b    l n , ? ' 
+     z v p c b    l n , ? ' 
             ␣     e
 
 ? + ' combo will toggle between hours and qwerty
@@ -33,6 +33,7 @@ OS⇧ t m s d g    x r i a h  OS⇧
 mlft mlft ;; so mods would work kinda like qmk's speculative hold when clicking/dragging
 ;;upper row
 ;;left
+⭾ ⭾
 q k	
 w @magic	
 e f	
@@ -64,8 +65,7 @@ l @i
 
 ;;bottom row
 ;;left
-‹⇧ ⭾
-102d ⭾ ;; this is the small key between left shift and Z on ISO keyboards, also called lsgt 
+102d XX ;; this is the small key between left shift and Z on ISO keyboards, also called lsgt 
 z z
 x v
 c p
@@ -140,9 +140,9 @@ b b
 ;; Sym layer (right thumb). includes numbers. i didn't figure out what to put on bottom left row so it's empty for now
 
 #|    
-    6 7 8 9 0	  [ ] ` \	⌫
-OS⇧   1 2 3 4 5      ; - = / OS⇧ 
-⭾                 esc ⭾ ␣ ␡  ↩	
+⭾    6 7 8 9 0	   [ ] ` \	⌫
+OS⇧   1 2 3 4 5    ; - = / OS⇧ 
+                  esc ⭾ ␣ ␡  ↩	
     layerlock
 |#            
 
@@ -151,6 +151,7 @@ OS⇧   1 2 3 4 5      ; - = / OS⇧
 mlft mlft
 ;;upper row
 ;;left
+⭾ ⭾
 q 6
 w 7
 e 8	
@@ -180,8 +181,7 @@ l @-
 
 ;;bottom row
 ;;left
-‹⇧ ⭾
-102d ⭾
+102d XX
 
 ;;right
 m esc
@@ -201,9 +201,9 @@ _ •
 ;; Nav layer
 
 #|
-    C-x C-c C-v       ↖ ▲ ↘    ⌫
-OS⇧ ‹⎈ ‹⎇ ‹❖ ⎇Gr      ◀ ▼ ▶ Cw OS⇧
-⭾   🔇 🔉 🔊          esc ⭾ ␣ ␡  ↩ 	
+⭾  C-x C-c C-v         ↖ ▲ ↘    ⌫
+OS⇧ ‹⎈ ‹⎇ ‹❖ ⎇Gr     ◀ ▼ ▶ Cw OS⇧
+     🔇 🔉 🔊       esc ⭾ ␣ ␡  ↩ 	
                     layerlock                 
 |#
 
@@ -214,6 +214,7 @@ OS⇧ ‹⎈ ‹⎇ ‹❖ ⎇Gr      ◀ ▼ ▶ Cw OS⇧
 mlft mlft
 ;;upper row
 ;;left
+⭾ ⭾
 w C-x
 e C-c
 r C-v
@@ -239,8 +240,7 @@ l ▼
 
 ;;bottom row
 ;;left
-‹⇧ ⭾
-102d ⭾
+102d XX
 z 🔇
 x 🔉
 c 🔊
