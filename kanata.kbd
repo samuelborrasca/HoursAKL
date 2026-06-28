@@ -22,7 +22,8 @@ windows-altgr cancel-lctl-press
 OS⇧ t m s d g    x r i a h  OS⇧
 ⭾   z v p c b    l n , ? ' 
             ␣     e
-      
+
+? + ' combo will toggle between hours and qwerty
 |#
 
 ;;─────────────────────────────
@@ -102,10 +103,21 @@ _ •
 (defvirtualkeys 
 b b
 ↩ ↩)
+
 (defchordsv2 
 	($magic $f) (on-press tap-vkey b) $chord-timeout all-released (sym nav)
 	($, $?) (on-press tap-vkey ↩) $chord-timeout all-released (sym nav)
+	($? $') (switch 
+			((base-layer qwerty)) (layer-switch top) break
+			() (layer-switch qwerty) break 
+		   ) $chord-timeout all-released ()
 )
+
+;;─────────────────────────────
+;; QWERTY layer
+;; the / + rsft qwerty position combo (? + ' on the top layer) will toggle between the qwerty layer and the top layer.
+
+(deflayermap (qwerty))
 
 ;;─────────────────────────────
 ;; Other layers
