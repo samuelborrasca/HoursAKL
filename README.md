@@ -18,4 +18,4 @@ It utilizes: \
 • mirrored one-shot pinky shifts & home row mods
 
 
-![Hours layout](hoursrowstag.png)
+![Hours layout](hoursrowstag2.png)
