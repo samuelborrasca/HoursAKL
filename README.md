@@ -15,7 +15,7 @@ It utilizes: \
 • magic with the following rules: nl rn u' ys, else repeat \
 • ? key on top layer, with it's shift behavior inverted from / (which is also included in the sym layer) \
 • nav and sym layers \
-• mirrored one-shot pinky shifts & home row mods \
+• mirrored one-shot pinky shifts & home row mods
 
 
 ![Hours layout](hoursrowstag.png)
