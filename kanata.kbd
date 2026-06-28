@@ -1,0 +1,353 @@
+;;no-name-yet-but-its-good-also-nokwts-fingering-repeat-with-rules-nl-rn-u_apostrophe-ys 
+
+(defcfg
+process-unmapped-keys yes
+concurrent-tap-hold yes
+chords-v2-min-idle 20
+windows-altgr cancel-lctl-press
+)
+
+(defsrc 
+     q   w   e   r   t   y   u   i   o   p   [   ] 
+  ⇪  a   s   d   f   g   h   j   k   l   ;   '   \  ↩
+  ‹⇧ z   x   c   v   b   n   m   ,   .   /   ⇧›
+                      ␣          ralt 
+)
+
+;;──────────────────────────────────────────────────────────────────────────────
+;;Layers
+
+#| Top layer
+    k ★ f y w    q j u o . ⌫
+OS⇧ t m s d g    x r i a h  OS⇧
+⭾   z v p c b    l n , ? ' 
+            ␣     e
+      
+|#
+
+;;─────────────────────────────
+;; Top layer
+
+(deflayermap (top)
+mlft mlft ;; so mods would work kinda like qmk's speculative hold when clicking/dragging
+;;upper row
+;;left
+q k	
+w @magic	
+e f	
+r y	
+t w
+;;right
+u q
+i j
+o u
+p o
+[ .
+] ⌫
+
+;;home row
+;;left
+⇪ (one-shot-release 2000 ‹⇧)
+a @t
+s @m
+d @s
+f @d
+g g
+;;right
+j x
+k @r
+l @i
+; @a
+' @h
+\ (one-shot-release 2000 ‹⇧)
+
+;;bottom row
+;;left
+‹⇧ ⭾
+102d ⭾ ;; this is the small key between left shift and Z on ISO keyboards, also called lsgt 
+z z
+x v
+c p
+v c
+;;right
+m l
+, n
+. ,
+/ @?
+⇧› '
+
+;;thumb keys
+␣ @␣
+ralt @e
+
+;;makes the unused alpha keys output nothing instead of the original key, but keeps all other keys like numrow and fn working normally
+_ •
+)
+
+;;magic rules: nl rn u' ys, else repeat
+(defalias
+  magic (switch
+    ((key-history n 1)) l break
+    ((key-history r 1)) n break
+    ((key-history u 1)) ' break
+    ((key-history y 1)) s break
+    () rpt break
+  )
+)
+
+;;? on top layer; inverted shift behavior from /
+(defalias ? (fork S-/ (unshift /) (lsft rsft)))
+
+;;
+(defvirtualkeys 
+b b
+↩ ↩)
+(defchordsv2 
+	($magic $f) (on-press tap-vkey b) $chord-timeout all-released (sym nav)
+	($, $?) (on-press tap-vkey ↩) $chord-timeout all-released (sym nav)
+)
+
+;;─────────────────────────────
+;; Other layers
+
+;; General helpers
+
+;;layer switch to top layer as virtual key so it can be auto triggered after idle
+(defvirtualkeys toplayer (layer-switch top))
+
+;;locking any layer will auto switch back to top layer after 30s idle, adjust to taste
+;;pressing again after locking to a layer will switch back to top layer
+(deftemplate layerlock (layer)
+	(switch 
+		((base-layer top)) (multi (layer-switch $layer) (on-physical-idle 30000 tap-vkey toplayer)) break
+		() (on-press tap-vkey toplayer) break 
+	)
+)
+
+;;─────────────────────────────
+;; Sym layer (right thumb). includes numbers. i didn't figure out what to put on bottom left row so it's empty for now
+
+#|    
+    6 7 8 9 0	  [ ] ` \	⌫
+OS⇧   1 2 3 4 5      ; - = / OS⇧ 
+⭾                 esc ⭾ ␣ ␡  ↩	
+    layerlock
+|#            
+
+(defalias symlock (t! layerlock sym))
+(deflayermap (sym)
+mlft mlft
+;;upper row
+;;left
+q 6
+w 7
+e 8	
+r 9	
+t 0
+;;right
+i [
+o ]
+p `
+[ \
+] ⌫
+
+;;home row
+;;left
+⇪ (one-shot-release 2000 ‹⇧)  
+a @1
+s @2
+d @3
+f @4
+g 5
+;;right
+k @;
+l @-
+; @=
+' @/
+\ (one-shot-release 2000 ‹⇧)
+
+;;bottom row
+;;left
+‹⇧ ⭾
+102d ⭾
+
+;;right
+m esc
+, ⭾
+. ␣
+/ ␡
+⇧› ↩
+
+;;thumb keys
+␣ @symlock
+
+;;unused keys
+_ •
+)
+
+;;─────────────────────────────
+;; Nav layer
+
+#|
+    C-x C-c C-v       ↖ ▲ ↘    ⌫
+OS⇧ ‹⎈ ‹⎇ ‹❖ ⎇Gr      ◀ ▼ ▶ Cw OS⇧
+⭾   🔇 🔉 🔊          esc ⭾ ␣ ␡  ↩ 	
+                    layerlock                 
+|#
+
+(defalias navlock (t! layerlock nav))
+(defalias Cw (caps-word-toggle 10000))
+
+(deflayermap (nav)
+mlft mlft
+;;upper row
+;;left
+w C-x
+e C-c
+r C-v
+;;right
+i ↖
+o ▲
+p ↘
+] ⌫
+
+;;home row
+;;left
+⇪ (one-shot-release 2000 ‹⇧) 
+a ‹⎈
+s ‹⎇ 
+d ‹❖ 
+f ralt 
+;;right
+k ◀
+l ▼
+; ▶
+' @Cw
+\ (one-shot-release 2000 ‹⇧)
+
+;;bottom row
+;;left
+‹⇧ ⭾
+102d ⭾
+z 🔇
+x 🔉
+c 🔊
+
+;;right
+m esc
+, ⭾
+. ␣
+/ ␡
+⇧› ↩
+
+;;thumb keys
+ralt @navlock
+
+;;unused keys
+_ •
+)
+
+;;──────────────────────────────────────────────────────────────────────────────
+;;Variables
+
+(defvar
+ tap-timeout 200
+ hold-timeout 250
+ chord-timeout 30
+
+k q
+magic w
+f e
+y r
+w t
+q u
+j i
+u o
+o p
+. ]
+
+t a
+m s
+s d
+d f
+g g
+x j
+r k
+i l
+a ;
+h '
+
+z z
+v x
+p c
+c v
+l m
+n ,
+, .
+? /
+' ⇧›
+␣ ␣
+e ralt
+
+lkeys ( 
+ $k $magic $f $y $w 
+ $t $m $s $d $g
+ $z $v $p $c 
+       $␣
+ )
+rkeys (
+ $q $j $u $o $.
+ $t $m $s $d $g
+ $l $n $, $? $' 
+    $e
+ )
+)
+
+;;──────────────────────────────────────────────────────────────────────────────
+;;Home row mods & layers
+
+(deftemplate flowtap (flow tap)
+  (switch 
+    ((key-timing 3 less-than 450)) $flow break
+    () $tap break
+  )
+)
+
+(deftemplate mod (char mod keys)
+  (defalias $char (t! flowtap 
+  				(tap-hold-release-keys $tap-timeout $hold-timeout $char $mod $keys)
+  				;;while typing (flow mode = 3 keys pressed in the last 450ms), any key within $keys pressed within timeout will immediately trigger tap action
+  				
+  				(tap-hold-release $tap-timeout $hold-timeout $char $mod)
+  				;;while not in flow mode, any key pressed and released before timeout will trigger hold action
+  			   )
+   )
+)
+
+;;top layer
+;;left side
+(t! mod t	‹⎈	$lkeys)
+(t! mod m	‹⎇	$lkeys)
+(t! mod s	‹❖	$lkeys)
+(t! mod d  ralt	$lkeys)
+(t! mod ␣	(layer-while-held nav) $lkeys)
+
+;;right side
+(t! mod h	⎈›	$rkeys)
+(t! mod a	‹⎇	$rkeys)
+(t! mod i	❖›	$rkeys)
+(t! mod r 	ralt   $rkeys)
+(t! mod e	(layer-while-held sym) $rkeys)
+
+;;sym layer
+;;left side
+(defalias 1 (tap-hold-release $tap-timeout $hold-timeout 1 ‹⎈))
+(defalias 2 (tap-hold-release $tap-timeout $hold-timeout 2 ‹⎇))
+(defalias 3 (tap-hold-release $tap-timeout $hold-timeout 3 ‹❖))
+(defalias 4 (tap-hold-release $tap-timeout $hold-timeout 4 ralt))
+
+;;right side
+(defalias / (tap-hold-release $tap-timeout $hold-timeout / ⎈›))
+(defalias = (tap-hold-release $tap-timeout $hold-timeout = ‹⎇))
+(defalias - (tap-hold-release $tap-timeout $hold-timeout - ❖›))
+(defalias ; (tap-hold-release $tap-timeout $hold-timeout ; ralt))
